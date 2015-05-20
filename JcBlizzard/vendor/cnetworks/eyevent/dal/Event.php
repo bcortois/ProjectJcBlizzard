@@ -13,14 +13,14 @@ class Event {
 
     protected $event;
     protected $form;
-    protected $log;
-    protected $connection;
+    protected $logBook;
+    protected $connector;
 
-    function __construct($event, $connection, $log)
+    function __construct($event, $connector, $log)
     {
         $this->event = $event;
-        $this->connection = $connection;
-        $this->log = $log;
+        $this->connector = $connector;
+        $this->logBook = $log;
     }
 
     /**
@@ -58,43 +58,24 @@ class Event {
     /**
      * @return mixed
      */
-    public function getConnection()
+    public function getLogBook()
     {
-        return $this->connection;
+        return $this->logBook;
     }
 
     /**
-     * @param mixed $connection
+     * @param mixed $logBook
      */
-    public function setConnection($connection)
+    public function setLogBook($logBook)
     {
-        $this->connection = $connection;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLog()
-    {
-        return $this->log;
-    }
-
-    /**
-     * @param mixed $log
-     */
-    public function setLog($log)
-    {
-        $this->log = $log;
+        $this->logBook = $logBook;
     }
 
     public function insert()
     {
         $pdo = NULL;
-        $this->log->startLog('Insert of event into database');
-        $this->log->setProvider('Cnetworks\Eyevent\Dal\Event');
-        try {
-            $connectionString = "mysql:host=localhost:3306;dbname=blizzard_db";
-            $pdo = new \PDO($connectionString, 'root', 'v0xL1d57');
+        $preparedStatement = NULL;
+        if($pdo = $this->connector->getConnection()) {
             $preparedStatement = $pdo->prepare('CALL EventInsert(@pId, :pName, :pDescription, :pDate, :pImage, :pValidated, :pShiftsLink, :pLocationName, :pLocationAddress, :pLocationCoordinates)');
             $preparedStatement->bindValue(':pName', $this->event->getName(), \PDO::PARAM_STR);
             $preparedStatement->bindValue(':pDescription', $this->event->getDescription(), \PDO::PARAM_STR);
@@ -106,35 +87,20 @@ class Event {
             $preparedStatement->bindValue(':pLocationAddress', $this->event->getLocationAddress(), \PDO::PARAM_STR);
             $preparedStatement->bindValue(':pLocationCoordinates', $this->event->getLocationCoordinates(), \PDO::PARAM_STR);
 
-            $result = $preparedStatement->execute();
-            if ($result)
-            {
+            $this->logBook->startLog('Insert of event into database');
+            $this->logBook->setProvider('Cnetworks\Eyevent\Dal\Event');
+            if ($preparedStatement->execute()) {
                 $this->event->setId($pdo->query('select @pId')->fetchColumn());
-                $this->log->setMessage("The event with id=" . $this->event->getId() . " was inserted successfully.");
+                $this->logBook->setMessage("The event with id=" . $this->event->getId() . " was inserted successfully.");
+            } else {
+                $this->logBook->setProvider('MySQL');
+                $this->logBook->setIsError(TRUE);
+                $this->logBook->setMessage($preparedStatement->errorInfo()[2]); // Message of the log is set to the value an array containing the SQL error.
+                $this->logBook->setErrorCodeProvider($preparedStatement->errorInfo()[1]);
             }
-            else
-            {
-                $this->log->setProvider('MySQL');
-                $this->log->setIsError(TRUE);
-                $this->log->setMessage($preparedStatement->errorInfo()[2]); // Message of the log is set to the value an array containing the SQL error.
-                $this->log->setErrorCodeProvider($preparedStatement->errorInfo()[1]);
-            }
-        }
-        catch (\PDOException $ex)
-        {
-            $this->log->setProvider('\PDO');
-            $this->log->setIsError(TRUE);
-            $this->log->setMessage($ex->getMessage());
-            $this->log->setErrorCodeProvider($ex->getCode());
-        }
-
-
-        if ($pdo) {
-            $this->pdo = NULL;
-            $this->log->endLog();
-        }
-        else {
-            $this->log->endLog();
+            $this->logBook->endLog();
+            $this->logBook->write();
+            $this->connector->closeConnection();
         }
     }
 }

@@ -18,11 +18,9 @@ class Log {
     protected $errorCodeProvider;
     protected $message;
     protected $isError;
-    protected $logBook;
 
     function __construct()
     {
-        $this->logBook = Array();
         $this->setIsError(FALSE);
     }
 
@@ -139,34 +137,18 @@ class Log {
         $this->isError = $isError;
     }
 
-    /**
-     * @return array
-     */
-    public function getLogBook()
+    public function duplicateLog()
     {
-        return $this->logBook;
-    }
-
-    /**
-     * @param array $logBook
-     */
-    public function setLogBook($logBook)
-    {
-        $this->logBook = $logBook;
-    }
-
-
-
-    public function addToLogBook() // This function saves the current log object to logBook.
-    {
-        $copy = new Log(); // New log object.
-        $copy = $this; // using the new log object to store a copy by value of current log.
-        $this->logBook[] = $copy; // The copy of the log is stored as an entry in the array logBook.
-    }
-
-    public function saveLogBook() // This function adds all the logs that are stored in logBook to a local logfile.
-    {
-
+        $duplicate = new Log(); // New log object.
+        // using the new log object to store a copy by value of current log.
+        $duplicate->setAction($this->getAction());
+        $duplicate->setStartTime($this->getStartTime());
+        $duplicate->setEndTime($this->getEndTime());
+        $duplicate->setProvider($this->getProvider());
+        $duplicate->setErrorCodeProvider($this->getErrorCodeProvider());
+        $duplicate->setMessage($this->getMessage());
+        $duplicate->setIsError($this->getIsError());
+        return $duplicate;
     }
 
     public function startLog($action) // This function initiates the starttime and gives the property action a value.
@@ -178,6 +160,16 @@ class Log {
     public function endLog()
     {
         $this->endTime = date("Y-m-d H:i:s"); //sets the current log end time.
-        $this->addToLogBook();
+    }
+
+    public function resetLog()
+    {
+        $this->setAction(NULL);
+        $this->setStartTime(NULL);
+        $this->setEndTime(NULL);
+        $this->setProvider(NULL);
+        $this->setErrorCodeProvider(NULL);
+        $this->setMessage(NULL);
+        $this->setIsError(NULL);
     }
 }

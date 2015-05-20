@@ -5,12 +5,13 @@ ini_alter('date.timezone','Europe/Brussels');
 
 require 'Event.php';
 require APP_PATH . '/bll/Event.php';
-require VENDOR_PATH . '/helpers/bll/Log.php';
+require VENDOR_PATH . '/helpers/bll/LogBook.php';
+require VENDOR_PATH . '/helpers/dal/Connector.php';
 
-$connection = 0;
-$log = new \CNetworks\Helpers\Bll\Log();
 $event = new \CNetworks\EyeVent\Bll\Event();
-$daEvent = new \CNetworks\EyeVent\Dal\Event($event, $connection, $log);
+$log = new \CNetworks\Helpers\Bll\LogBook();
+$connector = new \CNetworks\Helpers\Dal\Connector("localhost","3306","blizzard_db","root","v0xL1d57", $log);
+$daEvent = new \CNetworks\EyeVent\Dal\Event($event, $connector, $log);
 
 $event->setName('phpevent');
 $event->setDescription('phpdescription');
