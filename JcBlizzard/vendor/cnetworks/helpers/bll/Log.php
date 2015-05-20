@@ -15,6 +15,7 @@ class Log {
     protected $startTime;
     protected $endTime;
     protected $provider;
+    protected $errorCodeProvider;
     protected $message;
     protected $isError;
     protected $logBook;
@@ -22,6 +23,7 @@ class Log {
     function __construct()
     {
         $this->logBook = Array();
+        $this->setIsError(FALSE);
     }
 
     /**
@@ -87,6 +89,23 @@ class Log {
     {
         $this->provider = $provider;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getErrorCodeProvider()
+    {
+        return $this->errorCodeProvider;
+    }
+
+    /**
+     * @param mixed $errorCodeProvider
+     */
+    public function setErrorCodeProvider($errorCodeProvider)
+    {
+        $this->errorCodeProvider = $errorCodeProvider;
+    }
+
 
     /**
      * @return mixed
