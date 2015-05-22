@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Report</title>
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+    <style>
+        html, body, span, footer, nav, section, header, hr {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            outline: 0;
+            font-size: 100%;
+            vertical-align: baseline;
+            background: transparent;
+        }
+        html {
+            height: 100%;
+            width: 100%;
+        }
+        body {
+            height: 100%;
+            width: 100%;
+            font-family: 'PT Sans', serif;
+            font-size: 0.5em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rapport</h1>
+    <?php
+    foreach ($logBook->getLogBook() as $log)
+    {
+    ?>
+        <h2><?php echo 'Log';?></h2>
+        <p><b>Action: </b> <?php echo $log->getAction();?></p>
+        <p><b>Is error: </b> <?php if(!$log->getIsError()) {echo 'Nee';} else {echo 'Ja';}?></p>
+        <p><b>Start time: </b> <?php echo $log->getStartTime();?></p>
+        <p><b>Provider: </b> <?php echo $log->getProvider();?></p>
+        <p><b>Error code: </b> <?php echo $log->getErrorCodeProvider();?></p>
+        <p><b>Message: </b> <?php echo $log->getMessage();?></p>
+        <p><b>End time: </b> <?php echo $log->getEndTime();?></p>
+    <?php
+    }
+    ?>
+</body>
+</html>

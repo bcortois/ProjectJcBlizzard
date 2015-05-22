@@ -18,8 +18,9 @@ class Connector {
     protected $userName;
     protected $password;
     protected $log;
+    protected $feedback;
 
-    function __construct($hostName, $port, $databaseName, $userName, $password, $log)
+    function __construct($hostName, $port, $databaseName, $userName, $password, $log, $feedback)
     {
         $this->setHostName($hostName);
         $this->setPort($port);
@@ -28,6 +29,7 @@ class Connector {
         $this->setPassword($password);
         $this->setLog($log);
         $this->setPdo(NULL);
+        $this->feedback = $feedback;
     }
 
     /**
@@ -162,10 +164,12 @@ class Connector {
                 $this->log->setIsError(TRUE);
                 $this->log->setMessage($ex->getMessage());
                 $this->log->setErrorCodeProvider($ex->getCode());
+                $this->feedback->setIsError(true);
+                $this->feedback->setResult($ex->getCode());
             }
         }
         $this->log->endLog();
-        $this->log->write();
+        $this->log->writeLogBook();
         return $this->pdo;
     }
 
@@ -182,6 +186,6 @@ class Connector {
             $this->log->setMessage('Connection was successfully closed');
         }
         $this->log->endLog();
-        $this->log->write();
+        $this->log->writeLogBook();
     }
 }

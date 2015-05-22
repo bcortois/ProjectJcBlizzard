@@ -34,9 +34,14 @@ class LogBook extends Log{
         $this->logBook = $logBook;
     }
 
-    public function write() // This function saves the current log object to logBook.
+    public function writeLogBook() // This function saves the current log object to logBook.
     {
         $this->logBook[] = $this->duplicateLog(); // The copy of the log is stored as an entry in the array logBook.
         $this->resetLog();
+    }
+
+    public function printLogBook()
+    {
+
     }
 }

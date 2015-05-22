@@ -21,7 +21,7 @@ class Log {
 
     function __construct()
     {
-        $this->setIsError(FALSE);
+
     }
 
     /**
@@ -93,6 +93,9 @@ class Log {
      */
     public function getErrorCodeProvider()
     {
+        if (!$this->errorCodeProvider) {
+            $this->setErrorCodeProvider('n/a');
+        }
         return $this->errorCodeProvider;
     }
 
@@ -170,6 +173,6 @@ class Log {
         $this->setProvider(NULL);
         $this->setErrorCodeProvider(NULL);
         $this->setMessage(NULL);
-        $this->setIsError(NULL);
+        $this->setIsError(false);
     }
 }
