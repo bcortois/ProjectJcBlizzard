@@ -29,20 +29,20 @@ $event->setLocationCoordinates('89.89903928993993,190.23374663823');
 $daEvent->insert();
 if ($feedback->getIsError())
 {
-    echo $feedback->getResult();
+    echo $feedback->getResult() . "\r\n";
 }
 $form->setName('phpform');
 $form->setEventId($event->getId());
 $daForm->insert();
 if ($feedback->getIsError())
 {
-    echo $feedback->getResult();
+    echo $feedback->getResult() . "\r\n";
 }
 $fieldType->setName('Checkbox');
 $daFieldType->insert();
 if ($feedback->getIsError())
 {
-    echo $feedback->getResult();
+    echo $feedback->getResult() . "\r\n";
 }
 $inputField->setName('Naam');
 $inputField->setComment('commentaar');
@@ -52,13 +52,13 @@ $inputField->setFormId($form->getId());
 $daInputField->insert();
 if ($feedback->getIsError())
 {
-    echo $feedback->getResult();
+    echo $feedback->getResult() . "\r\n";
 }
 $subscriber->setFormId($form->getId());
 $daSubscriber->insert();
 if ($feedback->getIsError())
 {
-    echo $feedback->getResult();
+    echo $feedback->getResult() . "\r\n";
 }
 
-include $_SERVER['DOCUMENT_ROOT'] . '/vendor/cnetworks/helpers/view/log-report.html';
+include $_SERVER['DOCUMENT_ROOT'] . '/vendor/cnetworks/helpers/view/error-report.html';

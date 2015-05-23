@@ -45,6 +45,7 @@ class Connector {
             $connectionString = "mysql:host=" . $this->hostName . ":" . $this->port . ";dbname=" . $this->databaseName;
             try {
                 $this->pdo = new \PDO($connectionString, $this->userName, $this->password);
+                $this->pdo->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION ); // set up of pdo to throw all types of error into exceptions.
                 $this->log->setMessage('Connection successfully opened.');
             }
             catch (\PDOException $ex) {

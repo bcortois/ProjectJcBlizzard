@@ -18,6 +18,10 @@ class Feedback {
      */
     public function getResult()
     {
+        if (!$this->result)
+        {
+            return 'n/a';
+        }
         return $this->result;
     }
 
