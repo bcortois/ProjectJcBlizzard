@@ -11,11 +11,28 @@ namespace CNetworks\EyeVent\Bll;
 
 class InputField {
 
+    private $id;
     private $name;
     private $comment;
     private $position;
-    private $fieldType;
+    private $fieldTypeName;
     private $formId;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
     /**
      * @return mixed
@@ -68,17 +85,17 @@ class InputField {
     /**
      * @return mixed
      */
-    public function getFieldType()
+    public function getFieldTypeName()
     {
-        return $this->fieldType;
+        return $this->fieldTypeName;
     }
 
     /**
      * @param mixed $type
      */
-    public function setFieldType($fieldType)
+    public function setFieldTypeName($fieldTypeName)
     {
-        $this->fieldType = $fieldType;
+        $this->fieldTypeName = $fieldTypeName;
     }
 
     /**

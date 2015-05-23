@@ -11,7 +11,6 @@ namespace CNetworks\Helpers\Dal;
 
 class Connector {
 
-    protected $pdo;
     protected $hostName;
     protected $port;
     protected $databaseName;
@@ -19,144 +18,33 @@ class Connector {
     protected $password;
     protected $log;
     protected $feedback;
+    protected $pdo;
 
     function __construct($hostName, $port, $databaseName, $userName, $password, $log, $feedback)
     {
-        $this->setHostName($hostName);
-        $this->setPort($port);
-        $this->setDatabaseName($databaseName);
-        $this->setUserName($userName);
-        $this->setPassword($password);
-        $this->setLog($log);
-        $this->setPdo(NULL);
-        $this->feedback = $feedback;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPdo()
-    {
-        return $this->pdo;
-    }
-
-    /**
-     * @param mixed $pdo
-     */
-    public function setPdo($pdo)
-    {
-        $this->pdo = $pdo;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDatabaseName()
-    {
-        return $this->databaseName;
-    }
-
-    /**
-     * @param mixed $databaseName
-     */
-    public function setDatabaseName($databaseName)
-    {
-        $this->databaseName = $databaseName;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPort()
-    {
-        return $this->port;
-    }
-
-    /**
-     * @param mixed $port
-     */
-    public function setPort($port)
-    {
-        $this->port = $port;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLog()
-    {
-        return $this->log;
-    }
-
-    /**
-     * @param mixed $log
-     */
-    public function setLog($log)
-    {
-        $this->log = $log;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * @param mixed $password
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUserName()
-    {
-        return $this->userName;
-    }
-
-    /**
-     * @param mixed $userName
-     */
-    public function setUserName($userName)
-    {
-        $this->userName = $userName;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getHostName()
-    {
-        return $this->hostName;
-    }
-
-    /**
-     * @param mixed $hostName
-     */
-    public function setHostName($hostName)
-    {
         $this->hostName = $hostName;
+        $this->port = $port;
+        $this->databaseName = $databaseName;
+        $this->userName = $userName;
+        $this->password = $password;
+        $this->log = $log;
+        $this->feedback = $feedback;
+        $this->pdo = NULL;
     }
 
     public function getConnection()
     {
-        $this->log->startLog("Connecting to database " . $this->getDatabaseName() . " on host " . $this->getHostName());
+        $this->log->startLog("Connecting to database " . $this->databaseName . " on host " . $this->hostName);
         $this->log->setProvider('PDO');
-        if ($this->getPdo())
+        if ($this->pdo)
         {
             $this->log->setMessage('Connection already opened.');
         }
         else
         {
-            $connectionString = "mysql:host=" . $this->getHostName() . ":" . $this->getPort() . ";dbname=" . $this->getDatabaseName();
+            $connectionString = "mysql:host=" . $this->hostName . ":" . $this->port . ";dbname=" . $this->databaseName;
             try {
-                $this->setPdo(new \PDO($connectionString, $this->getUserName(), $this->getPassword()));
+                $this->pdo = new \PDO($connectionString, $this->userName, $this->password);
                 $this->log->setMessage('Connection successfully opened.');
             }
             catch (\PDOException $ex) {
