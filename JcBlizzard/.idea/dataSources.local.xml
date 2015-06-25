@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="blizzard_db - @localhost" uuid="d5a7a13e-7da4-4eb0-a93e-6ed6f5c543b8">
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <schema-pattern>blizzard_db.*</schema-pattern>
+      <default-schemas>blizzard_db.*</default-schemas>
+    </data-source>
+  </component>
+</project>

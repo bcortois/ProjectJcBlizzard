@@ -1,0 +1,17 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: table;
+}
+.calendar-cell {
+    display: table-cell;
+    text-align: left;
+    vertical-align: top;
+}
+.month-day {
+    background-color: red; /* just for the demo */
+    display: inline-block;
+    text-align: left;
+}

@@ -2,14 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: bert
- * Date: 21/05/2015
- * Time: 15:43
+ * Date: 23/05/2015
+ * Time: 20:44
  */
 
 namespace CNetworks\EyeVent\Dal;
 
 
-class FieldType extends Base{
+class Data extends Base{
 
     /**
      * Following properties are inherited from \CNetworks\EyeVent\Dal\Base:
@@ -23,20 +23,21 @@ class FieldType extends Base{
     public function insert($entity)
     {
         if($this->pdo = $this->connector->getConnection()) {
-            $this->logBook->startLog('Insert of fieldtype into database');
-            $this->logBook->setProvider('Cnetworks\Eyevent\Dal\FieldType');
+            $this->logBook->startLog('Insert of data into database');
+            $this->logBook->setProvider('Cnetworks\Eyevent\Dal\Data');
             try {
-                $this->preparedStatement = $this->pdo->prepare('CALL FieldTypeInsert(:pName)');
-                $this->preparedStatement->bindValue(':pName', $entity->getName(), \PDO::PARAM_STR);
-
+                $this->preparedStatement = $this->pdo->prepare('CALL DataInsert(@pId, :pValue, :pInputFieldId, :pSubscriberId)');
+                $this->preparedStatement->bindValue(':pValue', $entity->getValue(), \PDO::PARAM_STR);
+                $this->preparedStatement->bindValue(':pInputFieldId', $entity->getInputFieldId(), \PDO::PARAM_INT);
+                $this->preparedStatement->bindValue(':pSubscriberId', $entity->getSubscriberId(), \PDO::PARAM_INT);
                 if ($this->preparedStatement->execute()) {
-                    $this->logBook->setMessage("The fieldtype with id=" . $entity->getName() . " was inserted successfully.");
+                    $entity->setId($this->pdo->query('select @pId')->fetchColumn());
+                    $this->logBook->setMessage("The data with id=" . $entity->getId() . " was inserted successfully.");
                     $this->feedback->setIsError(false);
-                    $this->feedback->setResult($entity->getName());
+                    $this->feedback->setResult($entity->getId());
                 }
             }
-            catch (\PDOException $ex)
-            {
+            catch (\PDOException $ex) {
                 $this->logBook->setProvider('\PDO');
                 $this->logBook->setIsError(TRUE);
                 $this->logBook->setMessage($ex->getMessage());
@@ -52,20 +53,21 @@ class FieldType extends Base{
     }
 
     // returns a result dictionary of a db table and it's row's columns.
-    public function selectAll()
+    public function selectAllBySubscriberId($subscriberId)
     {
         $dbResults = null;
         if($this->pdo = $this->connector->getConnection()) {
-            $this->logBook->startLog('SelectAll from fieldtype table');
-            $this->logBook->setProvider('Cnetworks\Eyevent\Dal\FieldType');
+            $this->logBook->startLog('SelectAllBySubscriberId from data table');
+            $this->logBook->setProvider('Cnetworks\Eyevent\Dal\Data');
 
             try {
-                $this->preparedStatement = $this->pdo->prepare('CALL FieldTypeSelectAll()');
+                $this->preparedStatement = $this->pdo->prepare('CALL DataSelectAllBySubscriberId(:pId)');
+                $this->preparedStatement->bindValue(':pId', $subscriberId, \PDO::PARAM_INT);
                 if ($this->preparedStatement->execute()) {
                     $rowCount = $this->preparedStatement->rowCount();
 
                     if ($rowCount) {
-                        $this->logBook->setMessage("Tabel fieldtype: {$rowCount} rijen ingelezen.");
+                        $this->logBook->setMessage("Tabel data: {$rowCount} rijen ingelezen.");
                         $this->feedback->setIsError(false);
                         $this->feedback->setResult($rowCount); // In case the operation was successful, feedback result will be the count of rows that where selected
 
@@ -73,9 +75,9 @@ class FieldType extends Base{
                         $dbResults = $this->preparedStatement->fetchAll(\PDO::FETCH_ASSOC);
                     }
                     else {
-                        $this->logBook->setProvider('Cnetworks\Eyevent\Dal\FieldType');
+                        $this->logBook->setProvider('Cnetworks\Eyevent\Dal\Data');
                         $this->logBook->setIsError(TRUE);
-                        $this->logBook->setMessage('Tabel fieldtype is leeg.');
+                        $this->logBook->setMessage('Tabel data is leeg.');
                         //$this->logBook->setErrorCodeProvider($ex->getCode());
                         $this->feedback->setIsError(true);
                         $this->feedback->setResult(-1);

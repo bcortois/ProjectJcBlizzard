@@ -9,7 +9,7 @@
 namespace CNetworks\EyeVent\Bll;
 
 
-class Event {
+class Event implements \JsonSerializable {
 
     private $id;
     private $name;
@@ -22,6 +22,15 @@ class Event {
     private $locationAddress;
     private $locationCoordinates;
     private $form;
+
+    public static function getInstance($id, $name, $date)
+    {
+        $event = new Event();
+        $event->setId($id);
+        $event->setName($name);
+        $event->setDate($date);
+        return $event;
+    }
 
     /**
      * @return mixed
@@ -197,5 +206,17 @@ class Event {
     public function setForm($form)
     {
         $this->form = $form;
+    }
+
+    // this method is implemented through the JsonSerializable interface and returns the object of this class
+    // as an associative array (e.g. Array ("name" => "value", "date" => "value", ...))
+    // these arrays representing the object can be used to encode into Json arrays.
+    public function jsonSerialize() {
+        return get_object_vars($this);
+//        $json = get_object_vars($this);
+//        if ($this->getForm()) {
+//            $json['form'] = $this->getForm()->jsonSerialize();
+//        }
+//        return $json;
     }
 }

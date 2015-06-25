@@ -2,7 +2,7 @@
 -- 25 september 2014
 
 -- -------------------------------------- INSERT PROCEDURES ----------------------------------
--- Stored procedure insert voor de tabel form
+-- Stored procedure insert for table form
 
 USE blizzard_db;
 
@@ -26,7 +26,7 @@ END //
 DELIMITER ;
 
 
--- Stored procedure insert voor de tabel event
+-- Stored procedure insert for table event
 
 USE blizzard_db;
 
@@ -77,7 +77,7 @@ END //
 DELIMITER ;
 
 
--- Stored procedure insert voor de tabel form
+-- Stored procedure insert for table form
 
 USE blizzard_db;
 
@@ -107,7 +107,7 @@ END //
 DELIMITER ;
 
 
--- Stored procedure insert voor de tabel inputfield
+-- Stored procedure insert for table inputfield
 
 USE blizzard_db;
 
@@ -145,10 +145,66 @@ INSERT INTO `input_field`
 END //
 DELIMITER ;
 
+-- Stored procedure insert for table subscriber
+
+USE blizzard_db;
+
+DROP PROCEDURE IF EXISTS SubscriberInsert;
+
+DELIMITER //
+CREATE PROCEDURE `SubscriberInsert`
+(
+	OUT pId INT ,
+	IN pFormId INT
+)
+BEGIN
+INSERT INTO `subscriber`
+	(
+		`subscriber`.`fk_form_id`
+	)
+	VALUES
+	(
+		pFormId
+	);
+    SELECT LAST_INSERT_ID() INTO pId;
+END //
+DELIMITER ;
+
+-- Stored procedure insert for table data
+
+USE blizzard_db;
+
+DROP PROCEDURE IF EXISTS DataInsert;
+
+DELIMITER //
+CREATE PROCEDURE `DataInsert`
+(
+	OUT pId INT ,
+	IN pValue NVARCHAR (100) ,
+	IN pInputFieldId INT,
+    IN pSubscriberId INT
+    
+)
+BEGIN
+INSERT INTO `data`
+	(
+		`data`.`data_value`,
+		`data`.`fk_input_field_id`,
+        `data`.`fk_subscriber_id`
+	)
+	VALUES
+	(
+		pValue,
+		pInputFieldId,
+        pSubscriberId
+	);
+	SELECT LAST_INSERT_ID() INTO pId;
+END //
+DELIMITER ;
 
 -- -------------------------------------- SELECT ALL PROCEDURES ----------------------------------
 
--- Stored procedure select all voor de tabel event
+-- Stored procedure select all for table field_type
 USE blizzard_db;
 DROP PROCEDURE IF EXISTS FieldTypeSelectAll;
 DELIMITER //
@@ -156,13 +212,13 @@ CREATE PROCEDURE `FieldTypeSelectAll`
 (
 )
 BEGIN
-SELECT `field_type`.*
+SELECT `field_type`.`field_type_name`
 	FROM `field_type`
 ;
 END //
 DELIMITER ;
 
--- Stored procedure select all voor de tabel event
+-- Stored procedure select all for table event
 USE blizzard_db;
 DROP PROCEDURE IF EXISTS EventSelectAll;
 DELIMITER //
@@ -170,55 +226,96 @@ CREATE PROCEDURE `EventSelectAll`
 (
 )
 BEGIN
-SELECT `event`.*
+SELECT `event`.`event_id`, `event`.`event_name`, `event`.`event_date`
 	FROM `event`
 ;
 END //
 DELIMITER ;
 
--- Stored procedure select all voor de tabel form
+-- -------------------------------------- SELECT ONE PROCEDURES ----------------------------------
+
+-- Stored procedure select one by id for table form
 USE blizzard_db;
-DROP PROCEDURE IF EXISTS FormSelectAll;
+DROP PROCEDURE IF EXISTS EventSelectOneById;
 DELIMITER //
-CREATE PROCEDURE `FormSelectAll`
+CREATE PROCEDURE `EventSelectOneById`
 (
+	IN pId INT
 )
 BEGIN
-SELECT `form`.*
-	FROM `form`
+SELECT `event`.*, `form`.`form_id`, `form`.`form_name`
+	FROM `event`
+    LEFT JOIN `form`
+    ON `event`.`event_id` = `form`.`fk_event_id`
+    WHERE `event`.`event_id` = pId
 ;
 END //
 DELIMITER ;
 
--- Stored procedure select all voor de tabel event
+-- Stored procedure select all by event id for table form
 USE blizzard_db;
-DROP PROCEDURE IF EXISTS InputFieldSelectAll;
+DROP PROCEDURE IF EXISTS FormSelectOneById;
 DELIMITER //
-CREATE PROCEDURE `InputFieldSelectAll`
+CREATE PROCEDURE `FormSelectOneById`
 (
+	IN pId INT
+)
+BEGIN
+SELECT `form`.*, `input_field`.*
+	FROM `form`
+    LEFT JOIN `input_field`
+    ON `form`.`form_id` = `input_field`.`fk_form_id`
+    WHERE `form`.`form_id` = pId
+;
+END //
+DELIMITER ;
+
+-- -------------------------------------- SELECT ALL BY PROCEDURES ----------------------------------
+
+-- Stored procedure select all by form id for tabel input_field
+USE blizzard_db;
+DROP PROCEDURE IF EXISTS InputFieldSelectAllByFormId;
+DELIMITER //
+CREATE PROCEDURE `InputFieldSelectAllByFormId`
+(
+	IN pId INT
 )
 BEGIN
 SELECT `input_field`.*
 	FROM `input_field`
+    WHERE `input_field`.`fk_form_id` = pId
 ;
 END //
 DELIMITER ;
 
-
--- -------------------------------------- SELECT ONE PROCEDURES ----------------------------------
-
--- Stored procedure select one voor de tabel field_type
+-- Stored procedure select all by subscriber id for tabel data
 USE blizzard_db;
-DROP PROCEDURE IF EXISTS FieldTypeSelectByName;
+DROP PROCEDURE IF EXISTS DataSelectAllBySubscriberId;
 DELIMITER //
-CREATE PROCEDURE `FieldTypeSelectByName`
+CREATE PROCEDURE `DataSelectAllBySubscriberId`
 (
-	 pName INT 
+	IN pId INT
 )
 BEGIN
-SELECT `field_type`.`field_type_name`
+SELECT `data`.*
+	FROM `data`
+    WHERE `data`.`fk_subscriber_id` = pId
+;
+END //
+DELIMITER ;
 
-	FROM `field_type`
-	WHERE `field_type`.`field_type_name` = pName;
+-- Stored procedure select all by form id for tabel subscriber
+USE blizzard_db;
+DROP PROCEDURE IF EXISTS SubscriberSelectAllByFormId;
+DELIMITER //
+CREATE PROCEDURE `SubscriberSelectAllByFormId`
+(
+	IN pId INT
+)
+BEGIN
+SELECT `subscriber`.*
+	FROM `subscriber`
+    WHERE `subscriber`.`fk_form_id` = pId
+;
 END //
 DELIMITER ;

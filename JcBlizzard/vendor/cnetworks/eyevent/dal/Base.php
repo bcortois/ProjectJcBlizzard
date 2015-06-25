@@ -9,18 +9,16 @@
 namespace CNetworks\EyeVent\Dal;
 
 
-class Dal {
+class Base {
 
-    protected $entity;
     protected $connector;
     protected $logBook;
     protected $feedback;
     protected $pdo;
     protected $preparedStatement;
 
-    function __construct($entity, $connector, $logBook, $feedback)
+    function __construct($connector, $logBook, $feedback)
     {
-        $this->entity = $entity;
         $this->connector = $connector;
         $this->logBook = $logBook;
         $this->feedback = $feedback;

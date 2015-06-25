@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="blizzard_db - @localhost" uuid="d5a7a13e-7da4-4eb0-a93e-6ed6f5c543b8">
+    <database-info product="MySQL" version="5.6.22-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="blizzard_db"/>
+    <table name="data" schema="" catalog="blizzard_db" type="TABLE">
+      <column name="data_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="fk_input_field_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="data_value" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="fk_subscriber_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="data_id"/>
+      <foreign-key name="fk_input_field_data" columns="fk_input_field_id" ref-table="input_field" ref-schema="" ref-catalog="blizzard_db" ref-columns="input_field_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_subscriber_data" columns="fk_subscriber_id" ref-table="subscriber" ref-schema="" ref-catalog="blizzard_db" ref-columns="subscriber_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_input_field_data_idx" unique="false" columns="fk_input_field_id"/>
+      <index name="fk_subscriber_data_idx" unique="false" columns="fk_subscriber_id"/>
+    </table>
+    <table name="event" schema="" catalog="blizzard_db" type="TABLE">
+      <column name="event_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="event_name" sqlType="VARCHAR" precision="35" scale="0" nullable="true" jdbcType="12"/>
+      <column name="event_description" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="event_date" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="event_image" sqlType="MEDIUMBLOB" precision="16777215" scale="0" nullable="true" jdbcType="-4"/>
+      <column name="event_validated" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="event_shifts_link" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="event_location_name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="event_location_address" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="event_location_coordinates" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="event_id"/>
+      <exported-key name="fk_form_event" table="form" schema="" catalog="blizzard_db" columns="fk_event_id"/>
+    </table>
+    <table name="field_type" schema="" catalog="blizzard_db" type="TABLE">
+      <column name="field_type_name" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="field_type_name"/>
+      <exported-key name="fk_input_field_field_type" table="input_field" schema="" catalog="blizzard_db" columns="fk_field_type_name"/>
+    </table>
+    <table name="form" schema="" catalog="blizzard_db" type="TABLE">
+      <column name="form_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="form_name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="fk_event_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="form_id"/>
+      <foreign-key name="fk_form_event" columns="fk_event_id" ref-table="event" ref-schema="" ref-catalog="blizzard_db" ref-columns="event_id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="fk_input_field_form" table="input_field" schema="" catalog="blizzard_db" columns="fk_form_id"/>
+      <exported-key name="fk_form_subscriber" table="subscriber" schema="" catalog="blizzard_db" columns="fk_form_id"/>
+      <index name="fk_form_event_idx" unique="false" columns="fk_event_id"/>
+    </table>
+    <table name="input_field" schema="" catalog="blizzard_db" type="TABLE">
+      <column name="input_field_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="input_field_name" sqlType="VARCHAR" precision="25" scale="0" nullable="false" jdbcType="12"/>
+      <column name="input_field_comment" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="input_field_position" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="fk_field_type_name" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12"/>
+      <column name="fk_form_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="input_field_id"/>
+      <foreign-key name="fk_input_field_field_type" columns="fk_field_type_name" ref-table="field_type" ref-schema="" ref-catalog="blizzard_db" ref-columns="field_type_name" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_input_field_form" columns="fk_form_id" ref-table="form" ref-schema="" ref-catalog="blizzard_db" ref-columns="form_id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="fk_input_field_data" table="data" schema="" catalog="blizzard_db" columns="fk_input_field_id"/>
+      <index name="fk_input_field_field_type_idx" unique="false" columns="fk_field_type_name"/>
+      <index name="fk_input_field_form_idx" unique="false" columns="fk_form_id"/>
+    </table>
+    <table name="subscriber" schema="" catalog="blizzard_db" type="TABLE">
+      <column name="subscriber_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="fk_form_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="subscriber_id"/>
+      <foreign-key name="fk_form_subscriber" columns="fk_form_id" ref-table="form" ref-schema="" ref-catalog="blizzard_db" ref-columns="form_id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="fk_subscriber_data" table="data" schema="" catalog="blizzard_db" columns="fk_subscriber_id"/>
+      <index name="fk_form_subscriber_idx" unique="false" columns="fk_form_id"/>
+    </table>
+    <procedure name="DataInsert" schema="" catalog="blizzard_db" type="1">
+      <prototype>
+        <parameter name="pId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="1"/>
+        <parameter name="pValue" sqlType="NVARCHAR " precision="100" scale="0" nullable="true" jdbcType="1111" type="1" index="2"/>
+        <parameter name="pInputFieldId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="3"/>
+        <parameter name="pSubscriberId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="4"/>
+      </prototype>
+    </procedure>
+    <procedure name="DataSelectAll" schema="" catalog="blizzard_db" type="1"/>
+    <procedure name="DataSelectAllByFormId" schema="" catalog="blizzard_db" type="1"/>
+    <procedure name="DataSelectAllBySubscriberId" schema="" catalog="blizzard_db" type="1">
+      <prototype>
+        <parameter name="pId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="1"/>
+      </prototype>
+    </procedure>
+    <procedure name="EventInsert" schema="" catalog="blizzard_db" type="1">
+      <prototype>
+        <parameter name="pId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="1"/>
+        <parameter name="pName" sqlType="NVARCHAR " precision="35" scale="0" nullable="true" jdbcType="1111" type="1" index="2"/>
+        <parameter name="pDescription" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1" type="1" index="3"/>
+        <parameter name="pDate" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93" type="1" index="4"/>
+        <parameter name="pImage" sqlType="MEDIUMBLOB" precision="16777215" scale="0" nullable="true" jdbcType="-4" type="1" index="5"/>
+        <parameter name="pValidated" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" type="1" index="6"/>
+        <parameter name="pShiftsLink" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1" type="1" index="7"/>
+        <parameter name="pLocationName" sqlType="NVARCHAR " precision="40" scale="0" nullable="true" jdbcType="1111" type="1" index="8"/>
+        <parameter name="pLocationAddress" sqlType="NVARCHAR " precision="100" scale="0" nullable="true" jdbcType="1111" type="1" index="9"/>
+        <parameter name="pLocationCoordinates" sqlType="NVARCHAR " precision="45" scale="0" nullable="true" jdbcType="1111" type="1" index="10"/>
+      </prototype>
+    </procedure>
+    <procedure name="EventSelectAll" schema="" catalog="blizzard_db" type="1"/>
+    <procedure name="EventSelectOneById" schema="" catalog="blizzard_db" type="1">
+      <prototype>
+        <parameter name="pId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="1"/>
+      </prototype>
+    </procedure>
+    <procedure name="FieldTypeInsert" schema="" catalog="blizzard_db" type="1">
+      <prototype>
+        <parameter name="pName" sqlType="NVARCHAR " precision="15" scale="0" nullable="true" jdbcType="1111" type="1" index="1"/>
+      </prototype>
+    </procedure>
+    <procedure name="FieldTypeSelectAll" schema="" catalog="blizzard_db" type="1"/>
+    <procedure name="FieldTypeSelectByName" schema="" catalog="blizzard_db" type="1">
+      <prototype>
+        <parameter name="pName" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="1"/>
+      </prototype>
+    </procedure>
+    <procedure name="FormInsert" schema="" catalog="blizzard_db" type="1">
+      <prototype>
+        <parameter name="pId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="1"/>
+        <parameter name="pName" sqlType="NVARCHAR " precision="45" scale="0" nullable="true" jdbcType="1111" type="1" index="2"/>
+        <parameter name="pEventId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="3"/>
+      </prototype>
+    </procedure>
+    <procedure name="FormSelectAll" schema="" catalog="blizzard_db" type="1"/>
+    <procedure name="FormSelectAllByEventId" schema="" catalog="blizzard_db" type="1">
+      <prototype>
+        <parameter name="pId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="1"/>
+      </prototype>
+    </procedure>
+    <procedure name="FormSelectOneById" schema="" catalog="blizzard_db" type="1">
+      <prototype>
+        <parameter name="pId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="1"/>
+      </prototype>
+    </procedure>
+    <procedure name="InputFieldInsert" schema="" catalog="blizzard_db" type="1">
+      <prototype>
+        <parameter name="pId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="1"/>
+        <parameter name="pName" sqlType="NVARCHAR " precision="25" scale="0" nullable="true" jdbcType="1111" type="1" index="2"/>
+        <parameter name="pComment" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1" type="1" index="3"/>
+        <parameter name="pPosition" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="4"/>
+        <parameter name="pFieldTypeName" sqlType="NVARCHAR" precision="15" scale="0" nullable="true" jdbcType="1111" type="1" index="5"/>
+        <parameter name="pFormId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="6"/>
+      </prototype>
+    </procedure>
+    <procedure name="InputFieldSelectAll" schema="" catalog="blizzard_db" type="1"/>
+    <procedure name="InputFieldSelectAllByFormId" schema="" catalog="blizzard_db" type="1">
+      <prototype>
+        <parameter name="pId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="1"/>
+      </prototype>
+    </procedure>
+    <procedure name="SubscriberInsert" schema="" catalog="blizzard_db" type="1">
+      <prototype>
+        <parameter name="pId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="1"/>
+        <parameter name="pFormId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="2"/>
+      </prototype>
+    </procedure>
+    <procedure name="SubscriberSelectAllByFormId" schema="" catalog="blizzard_db" type="1">
+      <prototype>
+        <parameter name="pId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="1"/>
+      </prototype>
+    </procedure>
+  </data-source>
+</component>

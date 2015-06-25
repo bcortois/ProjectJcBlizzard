@@ -9,7 +9,7 @@
 namespace CNetworks\EyeVent\Bll;
 
 
-class Form {
+class Form implements \JsonSerializable {
 
     private $id;
     private $name;
@@ -97,5 +97,11 @@ class Form {
         $this->subscribers = $subscribers;
     }
 
-
+    public function jsonSerialize() {
+        return get_object_vars($this);
+//        return [
+//            "id" => $this->getId(),
+//            "name" => $this->getName()
+//        ];
+    }
 }
