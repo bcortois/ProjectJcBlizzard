@@ -1,0 +1,124 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Name>EyeVent</Name>
+    <ProjectGuid>{afdd5925-33c6-4378-9599-3ab9e3c048bc}</ProjectGuid>
+    <RootNamespace>EyeVent</RootNamespace>
+    <OutputType>Library</OutputType>
+    <ProjectTypeGuids>{A0786B88-2ADB-4C21-ABE8-AA2D79766269}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <IncludeDebugInformation>false</IncludeDebugInformation>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include=".idea\scopes\scope_settings.xml" />
+    <Compile Include=".idea\.name" />
+    <Compile Include=".idea\dataSources.ids" />
+    <Compile Include=".idea\dataSources.local.xml" />
+    <Compile Include=".idea\dataSources.xml" />
+    <Compile Include=".idea\encodings.xml" />
+    <Compile Include=".idea\JcBlizzard.iml" />
+    <Compile Include=".idea\misc.xml" />
+    <Compile Include=".idea\modules.xml" />
+    <Compile Include=".idea\php.xml" />
+    <Compile Include=".idea\vcs.xml" />
+    <Compile Include=".idea\workspace.xml" />
+    <Compile Include="nbproject\private\private.xml" />
+    <Compile Include="vendor\cnetworks\eyevent\bll\Data.php" />
+    <Compile Include="vendor\cnetworks\eyevent\bll\Event.php" />
+    <Compile Include="vendor\cnetworks\eyevent\bll\FieldType.php" />
+    <Compile Include="vendor\cnetworks\eyevent\bll\Form.php" />
+    <Compile Include="vendor\cnetworks\eyevent\bll\InputField.php" />
+    <Compile Include="vendor\cnetworks\eyevent\bll\Subscriber.php" />
+    <Compile Include="vendor\cnetworks\eyevent\controller\uploads\15KB.png" />
+    <Compile Include="vendor\cnetworks\eyevent\controller\uploads\20KB.jpg" />
+    <Compile Include="vendor\cnetworks\eyevent\controller\uploads\25KB.jpg" />
+    <Compile Include="vendor\cnetworks\eyevent\controller\uploads\30KB.gif" />
+    <Compile Include="vendor\cnetworks\eyevent\controller\uploads\35KB.gif" />
+    <Compile Include="vendor\cnetworks\eyevent\controller\uploads\50KB.jpg" />
+    <Compile Include="vendor\cnetworks\eyevent\controller\uploads\60KB.jpg" />
+    <Compile Include="vendor\cnetworks\eyevent\controller\uploads\63KB.jpg" />
+    <Compile Include="vendor\cnetworks\eyevent\controller\uploads\64KB.jpg" />
+    <Compile Include="vendor\cnetworks\eyevent\controller\uploads\test-image-gemiddeld.jpg" />
+    <Compile Include="vendor\cnetworks\eyevent\controller\uploads\test-image.jpg" />
+    <Compile Include="vendor\cnetworks\eyevent\controller\Controller.php" />
+    <Compile Include="vendor\cnetworks\eyevent\controller\LoadAllEvents.php" />
+    <Compile Include="vendor\cnetworks\eyevent\controller\LoadOneEventById.php" />
+    <Compile Include="vendor\cnetworks\eyevent\controller\phpinfo.php" />
+    <Compile Include="vendor\cnetworks\eyevent\controller\test-file-upload.html" />
+    <Compile Include="vendor\cnetworks\eyevent\controller\test-script.php" />
+    <Compile Include="vendor\cnetworks\eyevent\controller\uploadImage.php" />
+    <Compile Include="vendor\cnetworks\eyevent\css\cnetworks.eyevent-0.1.css" />
+    <Compile Include="vendor\cnetworks\eyevent\dal\Base.php" />
+    <Compile Include="vendor\cnetworks\eyevent\dal\Data.php" />
+    <Compile Include="vendor\cnetworks\eyevent\dal\Event.php" />
+    <Compile Include="vendor\cnetworks\eyevent\dal\EventManager.php" />
+    <Compile Include="vendor\cnetworks\eyevent\dal\FieldType.php" />
+    <Compile Include="vendor\cnetworks\eyevent\dal\Form.php" />
+    <Compile Include="vendor\cnetworks\eyevent\dal\InputField.php" />
+    <Compile Include="vendor\cnetworks\eyevent\dal\Subscriber.php" />
+    <Compile Include="vendor\cnetworks\eyevent\dal\UtDal.php" />
+    <Compile Include="vendor\cnetworks\eyevent\js\cnetworks.create-event-0.1.js" />
+    <Compile Include="vendor\cnetworks\eyevent\js\cnetworks.event-calendar-0.1.js" />
+    <Compile Include="vendor\cnetworks\eyevent\js\cnetworks.event-calendar-0.2.js" />
+    <Compile Include="vendor\cnetworks\eyevent\js\cnetworks.load-event-0.1.js" />
+    <Compile Include="vendor\cnetworks\eyevent\model\Base.php" />
+    <Compile Include="vendor\cnetworks\eyevent\model\Data.php" />
+    <Compile Include="vendor\cnetworks\eyevent\model\Event.php" />
+    <Compile Include="vendor\cnetworks\eyevent\model\EventManager.php" />
+    <Compile Include="vendor\cnetworks\eyevent\model\FieldType.php" />
+    <Compile Include="vendor\cnetworks\eyevent\model\Form.php" />
+    <Compile Include="vendor\cnetworks\eyevent\model\InputField.php" />
+    <Compile Include="vendor\cnetworks\eyevent\model\Model.php" />
+    <Compile Include="vendor\cnetworks\eyevent\model\Subscriber.php" />
+    <Compile Include="vendor\cnetworks\eyevent\model\UtEventManager.php" />
+    <Compile Include="vendor\cnetworks\eyevent\model\UtModel.php" />
+    <Compile Include="vendor\cnetworks\eyevent\view\create-event.php" />
+    <Compile Include="vendor\cnetworks\eyevent\view\event-calendar.php" />
+    <Compile Include="vendor\cnetworks\eyevent\view\test-file-upload.html" />
+    <Compile Include="vendor\cnetworks\eyevent\Controller.php" />
+    <Compile Include="vendor\cnetworks\helpers\bll\Feedback.php" />
+    <Compile Include="vendor\cnetworks\helpers\bll\Log.php" />
+    <Compile Include="vendor\cnetworks\helpers\bll\LogBook.php" />
+    <Compile Include="vendor\cnetworks\helpers\dal\Connector.php" />
+    <Compile Include="vendor\cnetworks\helpers\view\error-report.html" />
+    <Compile Include="vendor\cnetworks\helpers\view\log-report.html" />
+    <Compile Include="vendor\composer\autoload_classmap.php" />
+    <Compile Include="vendor\composer\autoload_namespaces.php" />
+    <Compile Include="vendor\composer\autoload_psr4.php" />
+    <Compile Include="vendor\composer\autoload_real.php" />
+    <Compile Include="vendor\composer\ClassLoader.php" />
+    <Compile Include="vendor\autoload.php" />
+    <Compile Include="composer.json" />
+    <Compile Include="event.php" />
+    <Compile Include="events.php" />
+    <Compile Include="form.php" />
+    <Compile Include="test-file-upload.php" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".idea\scopes" />
+    <Folder Include=".idea" />
+    <Folder Include="nbproject\private" />
+    <Folder Include="nbproject" />
+    <Folder Include="vendor\cnetworks\eyevent\bll" />
+    <Folder Include="vendor\cnetworks\eyevent\controller\files" />
+    <Folder Include="vendor\cnetworks\eyevent\controller\uploads" />
+    <Folder Include="vendor\cnetworks\eyevent\controller" />
+    <Folder Include="vendor\cnetworks\eyevent\css" />
+    <Folder Include="vendor\cnetworks\eyevent\dal" />
+    <Folder Include="vendor\cnetworks\eyevent\js" />
+    <Folder Include="vendor\cnetworks\eyevent\model" />
+    <Folder Include="vendor\cnetworks\eyevent\view" />
+    <Folder Include="vendor\cnetworks\eyevent" />
+    <Folder Include="vendor\cnetworks\helpers\bll" />
+    <Folder Include="vendor\cnetworks\helpers\dal" />
+    <Folder Include="vendor\cnetworks\helpers\view" />
+    <Folder Include="vendor\cnetworks\helpers" />
+    <Folder Include="vendor\cnetworks" />
+    <Folder Include="vendor\composer" />
+    <Folder Include="vendor" />
+  </ItemGroup>
+</Project>

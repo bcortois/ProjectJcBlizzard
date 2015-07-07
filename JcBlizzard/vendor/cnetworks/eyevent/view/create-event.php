@@ -9,7 +9,7 @@ $controller->initRequestScanner();
     <TITLE></TITLE>
 </HEAD>
 <BODY>
-    <FORM name="event-form" id="event-form" method="post">
+    <FORM name="event-form" id="event-form" method="post" enctype="multipart/form-data">
         <div>
             <h1>Evenement</h1>
         </div>
@@ -40,6 +40,10 @@ $controller->initRequestScanner();
         <div>
             <label id="event-location-coordinates">location-coordinates van het evenement: </label>
             <input type="text" id="event-location-coordinates" name="event-location-coordinates" />
+        </div>
+        <div>
+            <label id="event-location-coordinates">Kies een foto om te uploaden: </label>
+            <input type="file" id="event-image" name="event-image">
         </div>
         <div>
             <h1>Formulier</h1>

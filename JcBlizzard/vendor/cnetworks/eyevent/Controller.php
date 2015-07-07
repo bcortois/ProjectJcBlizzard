@@ -48,7 +48,7 @@ class Controller {
                     $this->model->createEvent($_POST['event-name'],
                     $_POST['event-description'],
                     $_POST['event-date'],
-                    null,
+                    addslashes(file_get_contents($_FILES['images']['tmp_name'])),
                     $_POST['event-shifts-link'],
                     $_POST['event-location-name'],
                     $_POST['event-location-address'],
