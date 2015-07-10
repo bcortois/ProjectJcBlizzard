@@ -22,7 +22,7 @@ these button's get assigned an eventlistener to handle the functionality. -->
 <!-- this container is used to store and manipulate a selectOne of an event on the calendar. -->
 <div id="event-detail">
 </div>
-<!-- the functions deeded for the operation of the event calendar are stored in these files. -->
+<!-- the functions needed for the operation of the event calendar are stored in these files. -->
 <!-- the they could have reside in the same file because the functions are inseparable. -->
 <script src="../js/cnetworks.event-calendar-0.2.js"></script>
 <script src="../js/cnetworks.load-event-0.1.js"></script>

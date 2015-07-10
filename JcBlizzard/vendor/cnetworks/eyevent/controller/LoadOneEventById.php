@@ -12,3 +12,5 @@ $controller = new \CNetworks\EyeVent\Controller\Controller($feedback);
 $controller->initEventModel();
 $model = $controller->getModel();
 echo json_encode($model->loadOneEvent($_GET['id'])->jsonSerialize());
+//$event = ($model->loadOneEvent(111));
+//echo '<img src="data:image/jpeg;base64,'.$event->getImage().'"/>';

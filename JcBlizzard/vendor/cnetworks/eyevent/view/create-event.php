@@ -53,7 +53,7 @@ $controller->initRequestScanner();
             <input type="text" id="form-name" name="form-name" />
         </div>
         <div id="create-form-input-fields">
-            <input type="text" id="input-field-names" name="input-field-names" value="" hidden="hidden" \>
+            <input type="text" id="input-field-names" name="input-field-names" value="" hidden="hidden" />
             <div>
                 <label id="input-field-name-1">Naam van het veld: </label>
                 <input type="text" id="input-field-name-1" name="input-field-name-1" />

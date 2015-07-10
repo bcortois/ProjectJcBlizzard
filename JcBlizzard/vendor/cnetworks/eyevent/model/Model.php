@@ -107,7 +107,12 @@ class Model extends Base {
         $this->boEvent->setName($result['event_name']);
         $this->boEvent->setDescription($result['event_description']);
         $this->boEvent->setDate($result['event_date']);
-        $this->boEvent->setImage($result['event_image']);
+
+        // this encodes the binary data so it stays uncorrupted while transfered through http.
+        // with this the jsonserailize will fail on the object.
+        $this->boEvent->setImage(base64_encode($result['event_image']));
+
+
         $this->boEvent->setValidated($result['event_validated']);
         $this->boEvent->setShiftsLink($result['event_shifts_link']);
         $this->boEvent->setLocationName($result['event_location_name']);

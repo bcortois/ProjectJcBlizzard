@@ -30,7 +30,7 @@ class Controller {
                     $this->initConnector();
                     $formName = null;
                     $inputFieldList = Array();
-                    if (isset($_POST['form-name'])) {
+                    if ($this->inputIsNotEmptyOrNull($_POST['form-name'])) {
                         $formName = $_POST['form-name'];
                         if($_POST['input-field-names']) {
                             $inputFieldNames = explode(",",$_POST['input-field-names']);
@@ -48,7 +48,7 @@ class Controller {
                     $this->model->createEvent($_POST['event-name'],
                     $_POST['event-description'],
                     $_POST['event-date'],
-                    addslashes(file_get_contents($_FILES['images']['tmp_name'])),
+                    file_get_contents($_FILES['event-image']['tmp_name']),
                     $_POST['event-shifts-link'],
                     $_POST['event-location-name'],
                     $_POST['event-location-address'],
@@ -79,5 +79,27 @@ class Controller {
 
     }
 
-
+    private function inputIsNotEmptyOrNull($input)
+    {
+        if (is_array($input)) {
+            if (empty($input)) {
+                return FALSE;
+            }
+            else {
+                foreach($input as $key => $value)
+                {
+                    if(!empty($value)) {
+                      return TRUE;
+                    }
+                }
+            }
+        }
+        else {
+            // this methode returns a boolean create by the if statement below.
+            // the first condition checks if the input var has a value other than null.
+            // if that is true it will check the value with the second condition which trims the value of whitespace and
+            // checks if the remaining value doesn't equal false (false equals "", 0, "0", False)
+            return (isset($input) && trim($input));
+        }
+    }
 }

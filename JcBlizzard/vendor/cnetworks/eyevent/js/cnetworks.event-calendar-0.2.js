@@ -2,18 +2,18 @@
  * Created by bert on 20/06/2015.
  */
 var Calendar = {
-    weekDays: [['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],['Zo','Ma','Di','Wo','Do','Vr','Za']],
-    months: [['January','February','March', 'April','May','June','July','August','September','October','November','December'],
-        ['Januari','Februari','Maart', 'April','Mei','Juni','Juli','Augustus','September','Oktober','November','December']],
+    weekDays: [['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], ['Zo', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za']],
+    months: [['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December']],
     monthDays: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
     currentDate: new Date(),
     month: null,
     year: null,
     firstMonthDay: null,
     html: '',
-    initCal : function (month, year) {
+    initCal: function (month, year) {
         this.month = (isNaN(month) || month == null) ? this.currentDate.getMonth() : month;
-        this.year  = (isNaN(year) || year == null) ? this.currentDate.getFullYear() : year;
+        this.year = (isNaN(year) || year == null) ? this.currentDate.getFullYear() : year;
         this.firstMonthDay = this.getFirstMonthDay();
         this.html = '';
 
@@ -23,9 +23,9 @@ var Calendar = {
         var firstDay = new Date(this.year, this.month, 1);
         return firstDay.getDay();
     },
-    checkLeapYear: function() {
+    checkLeapYear: function () {
         if (this.month == 1) {
-            if ((this.year % 4 == 0 && this.year % 100 != 0) || this.year % 400 == 0){
+            if ((this.year % 4 == 0 && this.year % 100 != 0) || this.year % 400 == 0) {
                 this.monthDays[1] = 29;
             }
         }
@@ -103,21 +103,25 @@ var Calendar = {
         return new Date(this.year, this.month, day, 0, 0, 0).getTime();
     },
     displayEvent: function () {
+        this.resetDisplay();
         var html = '';
         html += '<p>Naam: ' + EventController.event.name + '</p>';
         html += '<p>Datum: ' + EventController.event.date + '</p>';
         html += '<p>Locatie: ' + EventController.event.locationName + '</p>';
         html += '<p>Adres: ' + EventController.event.locationAddress + '</p>';
         html += '<p>Omschrijving: ' + EventController.event.description + '</p>';
-        this.resetDisplay();
-        document.getElementById('event-detail').insertAdjacentHTML('afterbegin',html);
+        // this next part uses the binary data of the event image, which was obtained by the ajax selectoneevent request,
+        // and drops it into the source attribute of an img container. by specifing inside the src attribute
+        // that it needs to read the src as data it will render the img trough use of the binary data inside event.image
+        html += '<img src="data:image/jpeg;base64,' + EventController.event.image + '" />';
+        document.getElementById('event-detail').insertAdjacentHTML('afterbegin', html);
     },
     resetDisplay: function () {
         document.getElementById('event-detail').innerHTML = '';
     },
     monthDecrease: function () {
         if (this.month < 1) {
-            this.initCal(11,this.year - 1)
+            this.initCal(11, this.year - 1)
         }
         else {
             this.initCal(this.month - 1, this.year)
@@ -127,7 +131,7 @@ var Calendar = {
     },
     monthIncrease: function () {
         if (this.month > 10) {
-            this.initCal(0 ,this.year + 1)
+            this.initCal(0, this.year + 1)
         }
         else {
             this.initCal(this.month + 1, this.year)
