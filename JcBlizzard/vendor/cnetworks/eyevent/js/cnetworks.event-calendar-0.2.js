@@ -37,7 +37,7 @@ var Calendar = {
         this.html += '<table id="calendar-grid" border="1">';
         this.html += '<tr>';
         this.html += '<th colspan="7">';
-        this.html += this.months[1][this.month];
+        this.html += this.months[1][this.month] + " " + this.year;
         this.html += '</th>';
         this.html += '</tr>';
         this.html += '<tr>';

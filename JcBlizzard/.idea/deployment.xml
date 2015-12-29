@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="CNET-s01_jcblizzard">
+    <serverData>
+      <paths name="CNET-s01_jcblizzard">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/jcblizzard" local="$PROJECT_DIR$" web="/jcblizzard" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
